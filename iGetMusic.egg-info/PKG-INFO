@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: iGetMusic
+Version: 0.0.2
+Summary: Search for music with the iTunes API
+Home-page: https://github.com/Waradu/iGetMusic
+Author: Waradu
+Author-email: einfach_noan@outlook.de
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENCE
