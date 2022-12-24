@@ -1,0 +1,10 @@
+LICENCE
+README.md
+pyproject.toml
+setup.cfg
+iGetMusic/__init__.py
+iGetMusic/iGet.py
+iGetMusic.egg-info/PKG-INFO
+iGetMusic.egg-info/SOURCES.txt
+iGetMusic.egg-info/dependency_links.txt
+iGetMusic.egg-info/top_level.txt
