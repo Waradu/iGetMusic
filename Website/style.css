@@ -1,20 +1,41 @@
 :root {
-  /*=======COLORS===========*/
-  --bg: #282c34;
-  --fg: #252931;
-  --e: #1d2025;
-  --tx: #abb2bf;
-  --txb: #ffffff;
-  --p: #bb86fc;
+  --bg: #292929;
+  --e: #1a1a1a;
+  --inside: #242424;
+  --text-small: #b3b4b6;
+  --text-select: #666666;
+  --text: #ffffff;
+  --p: #bf7bfb;
   --pv: #3700b3;
   --s: #03dac5;
   --sv: #018786;
-  --t: #e06c75;
-  --tv: #be5046;
+  --t: #cf6679;
+  --tv: #b00020;
 }
 * {
   border: 0;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+body {
+  background-color: var(--bg);
+  color: white;
+  font-family: 'Inter', sans-serif;
+  width: 100vw;
+}
+hr {
+  border-bottom: 1px solid gray;
+  margin: 10px;
+}
+pre {
+  width: auto;
+  background-color: var(--inside);
+  border-radius: 8px;
+  margin: 10px;
+  padding: 10px;
+}
+code {
+  padding: 0;
+  white-space: pre;
 }
