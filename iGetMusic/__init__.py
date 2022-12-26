@@ -1,6 +1,4 @@
-from .iGet import get
-from .iGet import getMinimalInfo
-from .iGet import resizeImage
+from .iGet import *
 
 
-__all__ = ('get', 'getMinimalInfo', 'resizeImage')
+__all__ = ('get')

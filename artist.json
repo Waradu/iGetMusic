@@ -1,0 +1,14 @@
+{
+  "resultCount": 4,
+  "results": [
+    {
+      "wrapperType": "artist",
+      "artistType": "Artist",
+      "artistName": "Sweepz",
+      "artistLinkUrl": "https://music.apple.com/gb/artist/sweepz/1346819917?uo=4",
+      "artistId": 1346819917,
+      "primaryGenreName": "Electronic",
+      "primaryGenreId": 7
+    }
+  ]
+}
