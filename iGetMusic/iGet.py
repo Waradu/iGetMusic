@@ -1,20 +1,13 @@
 import json
 itunes = "https://itunes.apple.com/search?"
+itunesLoockUp = "https://itunes.apple.com/lookup?"
 
 try:
     import requests
 except ImportError as e:
     print(
         "\033[91m"+"== PLEASE INSTALL REQUESTS (pip install requests) =="+"\033[0m")
-
-
-def getMultiple(term, country="GB", limit=50, explicit=True, entity="music"):
-    apiUrl = f"{itunes}term={term}&entity={entity}&country={country}&limit={limit}&explicit={'Yes' if explicit else 'No'}"
-    r = requests.get(apiUrl)
-
-    data = r.json()
-
-    return data
+    raise SystemExit
 
 
 class colors:
@@ -27,35 +20,6 @@ class colors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-
-
-def resizeImage(url: str, size: int):
-    url = url.replace("100x100bb.jpg", f"{size}x{size}bb.jpg")
-    url = url.replace("60x60bb.jpg", f"{size}x{size}bb.jpg")
-    url = url.replace("30x30bb.jpg", f"{size}x{size}bb.jpg")
-    return url
-
-
-"""
-def getMinimalInfo(oldjson):
-    minalList = []
-
-    x = 0
-
-    for item in oldjson["results"]:
-        minalList.append([])
-        minalList[x].append(item["trackName"])
-        minalList[x].append(item["collectionName"])
-        minalList[x].append(item["artistName"])
-        minalList[x].append(item["artworkUrl100"])
-        minalList[x].append(item["trackTimeMillis"])
-        minalList[x].append(item["isStreamable"])
-        minalList[x].append(False if item["trackExplicitness"]
-                            == "notExplicit" else True)
-        x += 1
-
-    return minalList
-"""
 
 
 class song:
@@ -100,11 +64,11 @@ class song:
 
     def getCountry(self):
         return self.country
-    
-    def getTrackViewUrl(self):
+
+    def getTrackViweUrl(self):
         return self.trackViewUrl
 
-    def Streamable(self):
+    def sreamable(self):
         return self.isStreamable
 
     def getCollectionName(self):
@@ -113,7 +77,7 @@ class song:
     def getResizedImage(self, size):
         return resizeImage(self.image, size)
 
-    def ids(self, printList: bool = False):
+    def ids(self):
         return [self.trackId, self.collectionId, self.artistId]
 
     def lenght(self):
@@ -123,13 +87,10 @@ class song:
         return self.trackExplicitness
 
     def searchForSongName(self, country="GB", limit=50, explicit=True):
-        return getMultiple(self.trackName, country, limit, explicit, "song")
+        return get(self.trackName, country, limit, explicit)
 
-    def searchForArtist(self, country="GB", limit=50, explicit=True):
-        return getMultiple(self.artistName, country, limit, explicit, "allArtist")
-
-    def searchForCollectionName(self, country="GB", limit=50, explicit=True):
-        return getMultiple(self.collectionName, country, limit, explicit, "album")
+    def getArtist(self, country="GB", limit=50, explicit=True):
+        return getArtist(self.artistName, country, limit, explicit)
 
 
 class artist:
@@ -151,7 +112,7 @@ class artist:
 
     def getName(self):
         return self.artistName
-    
+
     def getArtistLinkUrl(self):
         return self.artistLinkUrl
 
@@ -165,7 +126,17 @@ class artist:
         return [self.primaryGenreName, self.primaryGenreId]
 
     def searchForArtist(self, country="GB", limit=50, explicit=True):
-        return getMultiple(self.artistName, country, limit, explicit, "allArtist")
+        return getArtist(self.artistName, country, limit, explicit)
+
+    def getAllArtistSongs(self):
+        return getArtistSongs(self.artistId)
+
+
+def resizeImage(url, size):
+    url = url.replace("100x100bb.jpg", f"{size}x{size}bb.jpg")
+    url = url.replace("60x60bb.jpg", f"{size}x{size}bb.jpg")
+    url = url.replace("30x30bb.jpg", f"{size}x{size}bb.jpg")
+    return url
 
 
 def get(term, country="GB", explicit=True):
@@ -174,11 +145,15 @@ def get(term, country="GB", explicit=True):
     r = requests.get(apiUrl)
     data = r.json()
 
-    data = data["results"][0]
+    data = data["results"]
 
-    songData = song(data)
+    songList = []
 
-    return songData
+    for item in data:
+        songList.append(song(item))
+
+    return songList
+
 
 def getArtist(term, country="GB", explicit=True):
 
@@ -186,8 +161,30 @@ def getArtist(term, country="GB", explicit=True):
     r = requests.get(apiUrl)
     data = r.json()
 
-    data = data["results"][0]
+    data = data["results"]
 
-    songData = artist(data)
+    songList = []
 
-    return songData
+    for item in data:
+        songList.append(artist(item))
+
+    return songList
+
+
+def getAllArtistSongs(id):
+
+    apiUrl = f"{itunesLoockUp}id={id}&entity=song"
+    r = requests.get(apiUrl)
+    data = r.json()
+
+    data = data["results"]
+
+    songList = []
+
+    artistData = artist(data[0])
+
+    del data[0]
+    for item in data:
+        songList.append(song(item))
+
+    return songList, artistData

@@ -1,34 +1,60 @@
-# iGetMusic
+# iGetMusic Made by Waradu
 Python iGetMusic API used to get music Name, Artist, ImageURL usw. <br>
-See project on [pypi.org](https://pypi.org/project/iGetMusic/)
+See project on [pypi.org](https://pypi.org/project/iGetMusic/).
+See all country codes at [Wikipedia](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements)
 
 ## Introduction
 Use `pip install iGetMusic` to install the package.<br>
-After that install requests `pip install requests`<br>
-
+**After that install requests `pip install requests`**<br>
 Import package with `import iGetMusic as iGet`
 
 ### Get song by name:
-
+This returns a list containing all the songs as objects:
 ```py
-iGet.get(term=songName)
+song = iGet.get(term=songName, country="GB", explicit=True)
 ```
-You will get a json with the top 50 results. To change how many results you want to get with `limit=int` <br>
-Set from which country you want to get results with `country="CountryCode"` (Default "GB"). <br>
-See all codes at [Wikipedia](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements). <br>
-Toggle explicit content with `explicit=True/False`.
-
-### Get minimal info:
+Get song information:
 ```py
-iGet.getMinimalInfo(iGet.get(term=songName))
+song[x]
+  .getName() #Returns song name
+  .getArtist() #Returns song author name
+  .getImage() #Returns image URL
+  .getCountry() #Returns song country
+  .getTrackViweUrl() #Returns song view URL
+  .streamable() #Returns true/false if song is streamable or not
+  .getCollectionName() #Returns song collection name
+  .getResizedImage(size) #Returns image URL resized based on size
+  .ids() #Returns song id's as list [trackId, collectionId, artistId]
+  .lenght() #Returns song lenght
+  .explicit() #Returns true/false if song is explicit or not
+  .searchForSongName(country="GB", limit=50, explicit=True) #Returns list with "limit" amount of songs based on song name as objects
+  .searchForArtist(country="GB", limit=50, explicit=True) #Returns list with "limit" amount of artists based on song author name as objects
 ```
-All songs will be converted into a list with a list per song in it.<br>
-`results[SongNumber][0]` =  trachkName: Str <br>
-`results[SongNumber][1]` =  artistName: Str <br>
-`results[SongNumber][2]` =  artworkUrl100 (100x100): Str (imageURL) <br>
+
+### Get artist by name:
+This returns a list containing all the artists as objects:
+```py
+artist = iGet.getArtist(term=artistName, country="GB", explicit=True)
+```
+Get artist information:
+```py
+artist[x]
+  .getName() #Returns artist name
+  .getArtistLinkUrl() #Returns artist link Url
+  .getArtistID() #Returns artist id
+  .getType() #Returns type "artist"
+  .getGenre() #Returns artist genre as list [primaryGenreName, primaryGenreId]
+  .searchForArtist(country="GB", limit=50, explicit=True) #Returns list with "limit" amount of artists based on artist name as objects
+  .getAllArtistSongs() #See get all songs from artist
+```
+
+### Get all songs from artist:
+```py
+songs, artist = iGetMusic.getAllArtistSongs(id) #list of Songs as objects + artist as object
+```
 
 ### Resize image with URL:
 ```py
-iGet.resizeImage(siGet.getMinimalInfo(iGet.get(term=songName))[0][2], size)
+iGet.resizeImage(imageURL, size) #Returns image URL resized based on size
 ```
-This resizes the image by changing the imageURL.
+This resizes the image by changing the imageURL (No quality loss).
