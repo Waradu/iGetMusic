@@ -17,7 +17,7 @@ Get song information:
 ```py
 song[x]
   .getName() #Returns song name
-  .getArtist() #Returns song author name
+  .getArtistName() #Returns song author name
   .getImage() #Returns image URL
   .getCountry() #Returns song country
   .getTrackViweUrl() #Returns song view URL

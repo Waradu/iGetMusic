@@ -59,7 +59,7 @@ class song:
     def getName(self):
         return self.trackName
 
-    def getArtist(self):
+    def getArtistName(self):
         return self.artistName
 
     def getCountry(self):
@@ -89,7 +89,7 @@ class song:
     def searchForSongName(self, country="GB", limit=50, explicit=True):
         return get(self.trackName, country, limit, explicit)
 
-    def getArtist(self, country="GB", limit=50, explicit=True):
+    def searchForArtist(self, country="GB", limit=50, explicit=True):
         return getArtist(self.artistName, country, limit, explicit)
 
 
@@ -139,9 +139,9 @@ def resizeImage(url, size):
     return url
 
 
-def get(term, country="GB", explicit=True):
+def get(term, country="GB", limit=50, explicit=True):
 
-    apiUrl = f"{itunes}term={term}&entity=song&country={country}&limit=1&explicit={'Yes' if explicit else 'No'}"
+    apiUrl = f"{itunes}term={term}&entity=song&country={country}&limit={limit}&explicit={'Yes' if explicit else 'No'}"
     r = requests.get(apiUrl)
     data = r.json()
 

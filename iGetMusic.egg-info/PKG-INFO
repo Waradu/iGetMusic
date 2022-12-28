@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: iGetMusic
-Version: 0.0.5
+Version: 0.0.6
 Summary: Search for music with the iTunes API
 Home-page: https://github.com/Waradu/iGetMusic
 Author: Waradu
@@ -31,7 +31,7 @@ Get song information:
 ```py
 song[x]
   .getName() #Returns song name
-  .getArtist() #Returns song author name
+  .getArtistName() #Returns song author name
   .getImage() #Returns image URL
   .getCountry() #Returns song country
   .getTrackViweUrl() #Returns song view URL

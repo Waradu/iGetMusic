@@ -1,4 +1,5 @@
 import iGetMusic
 
+song = iGetMusic.get("tokyo")
 
-print(iGetMusic.getAllArtistSongs(iGetMusic.getArtist("Sweepz")[0].getArtistID())[-1].getResizedImage(512))
+print(song[0].searchForSongName())
